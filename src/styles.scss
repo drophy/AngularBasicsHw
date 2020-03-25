@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+$primary: rgb(227, 0, 92);
+$secondary: rgb(0, 190, 166);
+
+/// BOOTSTRAP ///
+// Change bootstrap colors - must be done before importing the stylesheet
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+$theme-colors: ( primary: $primary, secondary: $secondary );
+
+@import "~bootstrap/scss/bootstrap.scss"; // Bootstrap stylesheet
+
+/// APP COMPONENT ///
+#halfpage-container {
+    width: 50%;
+    padding: 20px;
+}
+
+h1 {
+    color: $primary;
+}
+
+/// SEARCHER COMPONENT ///
+input[type=number] {
+    width: 40px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    color: $secondary;
+}
+
+/// ITEM COMPONENT ///
+li[class=media] {
+    margin-bottom: 20px;
+    img {
+        border-radius: 10px;
+        // width: 100px; // no longer needed thanks to Lorem picsum :3
+    }
+    p {
+    margin-bottom: 0;
+    }
+}
+
+.desired-rating {
+    background-color: $secondary;
+    color: white;
+}

@@ -1,0 +1,63 @@
+<!-- SEARCH -->
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Which product are you looking for?" [(ngModel)]="query" (keydown.enter)="search()" aria-label="Product query">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" (click)="search()">Search</button>
+    </div>
+</div>
+<p class="text-muted" *ngIf="query.length >= 3">Click "Search" or press Enter when you're ready to, uh, search!</p>
+
+<!-- FILTERS -->
+<div id="accordionId" class="accordion">
+    <div class="card">
+
+        <div class="card-header">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#filters">
+                    <b>Edit search filters</b>
+                </button>
+            </h2>
+        </div>
+
+        <div id="filters" class="collapse" data-parent="#accordionId">
+            <div class="card-body">
+                
+                <div class="custom-control custom-checkbox">
+                    <!-- Use (change) event and NOT (click) or it works the other way around for some reason o.o -->
+                    <input type="checkbox" class="custom-control-input" id="in-stock" [(ngModel)]="stockCheckbox" (change)="search()">
+                    <label class="custom-control-label" for="in-stock">Show only in-stock products</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="price-sort" [(ngModel)]="sortCheckbox" (change)="search()">
+                    <label class="custom-control-label" for="price-sort">Sort by price</label>
+                </div>
+                <div class="custom-control custom-checkbox" style="display: inline">
+                    <input type="checkbox" class="custom-control-input" id="highlight" [(ngModel)]="ratingCheckbox">
+                    <label class="custom-control-label" for="highlight">Highlight if rating is at least&nbsp;</label>
+                </div>
+                <input type="number" min="0" max="5" value="4" [(ngModel)]="desiredRating" style="display: inline">
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+
+<!-- RESULTS -->
+<ul class="list-unstyled" *ngFor="let product of arrResults">
+    <li class="media">
+        <img src="{{'https://picsum.photos/id/'+product.uid+'/150/150'}}" class="mr-3" alt="...">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1 text-secondary">{{product.name}}</h5>
+            <p [ngClass]="{'desired-rating':ratingCheckbox && product.rating>desiredRating}"><b>Rating: </b>{{product.rating}}</p>
+            <p><b>Price: </b>{{product.price}}</p>
+            <p><b>Description: </b>{{product.description}}</p>
+            <p><b>In stock: </b>{{product.stock}}</p>
+        </div>
+    </li>
+</ul>
+
+<div class="alert alert-secondary" role="alert" *ngIf="arrResults.length === 0">
+    Oops! No results were found for your query and filters!
+</div>
